@@ -1,0 +1,32 @@
+version: "3"
+
+services:
+  postgres-b:
+    container_name: postgres-b
+    image: postgres:latest
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: root
+    networks:
+      - postgres-b
+
+  pgadmin:
+    container_name: pgadmin-b
+    image: dpage/pgadmin4:latest
+    restart: always
+
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "admin@admin.com"
+      PGADMIN_DEFAULT_PASSWORD: "admin"
+    ports:
+      - "80:80"
+    depends_on:
+      - postgres-b
+    networks:
+      - postgres-b
+networks:
+  postgres-b:
