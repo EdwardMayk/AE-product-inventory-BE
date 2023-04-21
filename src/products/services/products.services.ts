@@ -51,8 +51,10 @@ export class ProductsService {
     const product = await this.productsRepository.findOne({
       where: { uuid: uuid },
     });
-    if (product) {
-      return this.productsRepository.softDelete(product);
+    if (!product) {
+      return 'Product not found';
     }
+
+    return this.productsRepository.delete({ uuid: uuid });
   }
 }

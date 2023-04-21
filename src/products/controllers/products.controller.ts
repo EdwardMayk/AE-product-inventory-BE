@@ -5,16 +5,16 @@ import { ProductsInput, UpdateProductsInput } from '../dto/products-input';
 import { Param } from '@nestjs/common';
 import { NotFoundException } from '@nestjs/common';
 
-@Controller('products')
+@Controller()
 export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
 
-  @Get('get-all')
+  @Get('products')
   async findAll(): Promise<Products[]> {
     return this.productsService.findAll();
   }
 
-  @Get('/:uuid')
+  @Get('products/:uuid')
   async findByUuid(@Param('uuid') uuid: string): Promise<Products> {
     const product = await this.productsService.findByUuid(uuid);
     if (!product) {
@@ -23,7 +23,7 @@ export class ProductsController {
     return product;
   }
 
-  @Post()
+  @Post('products')
   async create(@Body() args: ProductsInput) {
     const products = this.productsService.create(args);
     return products;
