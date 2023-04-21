@@ -4,10 +4,11 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  DeleteDateColumn,
 } from 'typeorm';
 
-@Entity({ name: 'users' })
-export class User {
+@Entity({ name: 'products' })
+export class Products {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -18,16 +19,22 @@ export class User {
   name: string;
 
   @Column({ type: 'varchar', length: 100 })
-  lastname: string;
+  category: string;
 
   @Column({ type: 'varchar', length: 100 })
-  email: string;
+  brand: string;
 
   @Column({ type: 'varchar', length: 100 })
-  password: string;
+  description: string;
+
+  @Column({ type: 'int' })
+  price: number;
+
+  @Column({ type: 'int' })
+  stock: number;
 
   @Column({ type: 'varchar', length: 100 })
-  role: string;
+  image: string;
 
   @Column()
   @CreateDateColumn({
@@ -44,4 +51,11 @@ export class User {
     default: () => 'CURRENT_TIMESTAMP',
   })
   updatedAt: Date;
+
+  @Column()
+  @DeleteDateColumn({
+    type: 'timestamp',
+    name: 'deleted_at',
+  })
+  deletedAt: Date;
 }
