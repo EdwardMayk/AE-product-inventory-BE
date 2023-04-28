@@ -38,9 +38,4 @@ export class ProductsInput {
   image: string;
 }
 
-export class UpdateProductsInput extends PartialType(ProductsInput) {
-  //uuid
-  @IsNotEmpty()
-  @IsString()
-  uuid: string;
-}
+export class UpdateProductsInput extends PartialType(ProductsInput) {}

@@ -31,8 +31,7 @@ export class ProductsService {
     return this.productsRepository.save(newProduct);
   }
 
-  async update(args: UpdateProductsInput): Promise<any> {
-    const uuid = args.uuid;
+  async update(args: UpdateProductsInput, uuid: string): Promise<any> {
     if (uuid) {
       const product = await this.productsRepository.findOne({
         where: { uuid: uuid },
