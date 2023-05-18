@@ -19,22 +19,26 @@ export class Products {
   name: string;
 
   @Column({ type: 'varchar', length: 100 })
-  category: string;
+  code: string;
 
   @Column({ type: 'varchar', length: 100 })
-  brand: string;
+  brand_car: string;
 
   @Column({ type: 'varchar', length: 100 })
   description: string;
 
   @Column({ type: 'int' })
-  price: number;
+  price_buy: number;
 
   @Column({ type: 'int' })
   stock: number;
 
   @Column({ type: 'varchar', length: 100 })
   image: string;
+
+  //price
+  @Column({ type: 'float' })
+  price_sell: number;
 
   @Column()
   @CreateDateColumn({

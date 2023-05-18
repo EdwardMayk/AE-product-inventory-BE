@@ -15,11 +15,11 @@ export class ProductsInput {
 
   @IsNotEmpty()
   @IsString()
-  category: string;
+  code: string;
 
   @IsNotEmpty()
   @IsString()
-  brand: string;
+  brand_car: string;
 
   @IsNotEmpty()
   @IsString()
@@ -27,7 +27,12 @@ export class ProductsInput {
 
   @IsNotEmpty()
   @IsNumber()
-  price: number;
+  price_buy: number;
+
+  //price_sell
+  @IsNotEmpty()
+  @IsNumber()
+  price_sell: number;
 
   @IsNotEmpty()
   @IsNumber()
