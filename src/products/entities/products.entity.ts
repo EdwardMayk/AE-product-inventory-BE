@@ -27,7 +27,7 @@ export class Products {
   @Column({ type: 'varchar', length: 100 })
   description: string;
 
-  @Column({ type: 'int' })
+  @Column({ type: 'float' })
   price_buy: number;
 
   @Column({ type: 'int' })
