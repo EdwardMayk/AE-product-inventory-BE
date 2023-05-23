@@ -5,6 +5,8 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   DeleteDateColumn,
+  AfterInsert,
+  AfterRemove,
 } from 'typeorm';
 
 @Entity({ name: 'products' })
@@ -39,6 +41,20 @@ export class Products {
   //price
   @Column({ type: 'float' })
   price_sell: number;
+
+  // Método para disminuir el stock cuando se agrega un item al carrito
+  @AfterInsert()
+  decreaseStockAfterInsert() {
+    if (this.stock > 0) {
+      this.stock -= 1;
+    }
+  }
+
+  // Método para aumentar el stock cuando se elimina un item del carrito
+  @AfterRemove()
+  increaseStockAfterRemove() {
+    this.stock += 1;
+  }
 
   @Column()
   @CreateDateColumn({
