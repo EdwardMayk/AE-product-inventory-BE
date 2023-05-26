@@ -4,7 +4,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { Products } from '../entities/products.entity';
 import { v4 as uuidv4 } from 'uuid';
 import { ProductsInput, UpdateProductsInput } from '../dto/products-input';
@@ -22,6 +22,11 @@ export class ProductsService {
   async findByUuid(uuid: string): Promise<Products> {
     return this.productsRepository.findOne({
       where: { uuid: uuid },
+    });
+  }
+  async findByUuids(uuids: string[]): Promise<Products[]> {
+    return this.productsRepository.find({
+      where: { uuid: In(uuids) },
     });
   }
 
@@ -65,10 +70,7 @@ export class ProductsService {
   }
 
   async addToCart(items: { uuid: string; quantity: number }[]): Promise<any> {
-    const products = await this.productsRepository.findByIds(
-      items.map((item) => item.uuid),
-    );
-
+    const products = await this.findByUuids(items.map((item) => item.uuid));
     const insufficientStockItems = [];
 
     for (const item of items) {
@@ -83,6 +85,7 @@ export class ProductsService {
       } else {
         const cartItem = new CartItem();
         cartItem.product = product;
+        cartItem.uuid = uuidv4();
         cartItem.quantity = item.quantity;
 
         // Guardar el objeto "CartItem" en la base de datos utilizando TypeORM

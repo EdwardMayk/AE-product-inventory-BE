@@ -1,4 +1,13 @@
-import { Controller, Post, Body, Get, Delete, Put } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  Get,
+  Delete,
+  Put,
+  HttpStatus,
+  HttpException,
+} from '@nestjs/common';
 import { ProductsService } from '../services/products.services';
 import { Products } from '../entities/products.entity';
 import { ProductsInput, UpdateProductsInput } from '../dto/products-input';
@@ -38,5 +47,20 @@ export class ProductsController {
   @Delete('delete/:uuid')
   async delete(@Param('uuid') uuid: string) {
     return this.productsService.delete(uuid);
+  }
+
+  @Post('addToCart')
+  async addToCart(
+    @Body() items: { uuid: string; quantity: number }[],
+  ): Promise<any> {
+    try {
+      await this.productsService.addToCart(items);
+      return { message: 'Products added to cart successfully' };
+    } catch (error) {
+      throw new HttpException(
+        { message: 'Failed to add products to cart', error },
+        HttpStatus.BAD_REQUEST,
+      );
+    }
   }
 }
