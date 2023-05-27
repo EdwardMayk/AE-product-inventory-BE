@@ -34,16 +34,16 @@ export class UserService {
     return this.userRepository.save(newUser);
   }
 
+  async delete(uuid: string) {
+    return this.userRepository.delete({ uuid });
+  }
+
   async findAll(): Promise<User[]> {
     return this.userRepository.find();
   }
 
   async findByEmail(email: string): Promise<User> {
     return await this.userRepository.findOne({ where: { email } });
-  }
-
-  async delete(uuid: string): Promise<void> {
-    await this.userRepository.delete({ uuid });
   }
 
   async login(email: string, password: string): Promise<User> {
