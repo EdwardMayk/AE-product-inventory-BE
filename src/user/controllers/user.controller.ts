@@ -41,8 +41,8 @@ export class UserController {
     return this.userService.findAll();
   }
 
-  @Post('delete')
-  async delete(@Body() uuid: string): Promise<void> {
+  @Delete('delete:uuid')
+  async delete(@Param('uuid') uuid: string) {
     await this.userService.delete(uuid);
   }
 }
