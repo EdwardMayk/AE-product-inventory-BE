@@ -42,6 +42,10 @@ export class UserService {
     return await this.userRepository.findOne({ where: { email } });
   }
 
+  async delete(uuid: string): Promise<void> {
+    await this.userRepository.delete({ uuid });
+  }
+
   async login(email: string, password: string): Promise<User> {
     const user = await this.findByEmail(email);
     if (!user) {
