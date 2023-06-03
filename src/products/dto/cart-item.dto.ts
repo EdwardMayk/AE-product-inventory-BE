@@ -18,4 +18,24 @@ export class CartItemDTO {
   @IsNotEmpty()
   @IsNumber()
   amount: number;
+
+  //name of client
+  @IsNotEmpty()
+  @IsString()
+  name: string;
+
+  //address
+  @IsNotEmpty()
+  @IsString()
+  address: string;
+
+  //dni or ruc
+  @IsNotEmpty()
+  @IsString()
+  dni: string;
+
+  //date
+  @IsNotEmpty()
+  @IsString()
+  date: string;
 }
