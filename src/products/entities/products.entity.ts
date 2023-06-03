@@ -5,7 +5,9 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   DeleteDateColumn,
+  OneToMany,
 } from 'typeorm';
+import { CartItem } from './cart_item.entity';
 
 @Entity({ name: 'products' })
 export class Products {
@@ -39,6 +41,10 @@ export class Products {
   //price
   @Column({ type: 'float' })
   price_sell: number;
+
+  //relatio with cart_item
+  @OneToMany(() => CartItem, (cartItem) => cartItem.product)
+  cartItems: CartItem[];
 
   @Column()
   @CreateDateColumn({

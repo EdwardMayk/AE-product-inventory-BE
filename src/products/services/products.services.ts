@@ -9,6 +9,7 @@ import { Products } from '../entities/products.entity';
 import { v4 as uuidv4 } from 'uuid';
 import { ProductsInput, UpdateProductsInput } from '../dto/products-input';
 import { CartItem } from '../entities/cart_item.entity';
+import { CartItemDTO } from '../dto/cart-item.dto';
 
 @Injectable()
 export class ProductsService {
@@ -69,7 +70,7 @@ export class ProductsService {
     return this.productsRepository.delete({ uuid: uuid });
   }
 
-  async addToCart(items: { uuid: string; quantity: number }[]): Promise<any> {
+  async addToCart(items: CartItemDTO[]): Promise<any> {
     const products = await this.findByUuids(items.map((item) => item.uuid));
     const insufficientStockItems = [];
 
@@ -87,6 +88,8 @@ export class ProductsService {
         cartItem.product = product;
         cartItem.uuid = uuidv4();
         cartItem.quantity = item.quantity;
+        cartItem.amount = item.amount;
+        cartItem.collection = item.collection;
 
         // Guardar el objeto "CartItem" en la base de datos utilizando TypeORM
         await this.cartItemsRepository.save(cartItem);

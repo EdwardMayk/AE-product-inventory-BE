@@ -13,6 +13,7 @@ import { Products } from '../entities/products.entity';
 import { ProductsInput, UpdateProductsInput } from '../dto/products-input';
 import { Param } from '@nestjs/common';
 import { NotFoundException } from '@nestjs/common';
+import { CartItemDTO } from '../dto/cart-item.dto';
 
 @Controller()
 export class ProductsController {
@@ -50,9 +51,7 @@ export class ProductsController {
   }
 
   @Post('addToCart')
-  async addToCart(
-    @Body() items: { uuid: string; quantity: number }[],
-  ): Promise<any> {
+  async addToCart(@Body() items: CartItemDTO[]): Promise<any> {
     try {
       await this.productsService.addToCart(items);
       return { message: 'Products added to cart successfully' };

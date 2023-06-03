@@ -12,6 +12,12 @@ export class CartItem {
   @ManyToOne(() => Products)
   product: Products;
 
-  @Column({ type: 'int' })
+  @Column({ type: 'int', nullable: true })
   quantity: number;
+
+  @Column({ type: 'int', nullable: true })
+  amount: number;
+
+  @Column({ type: 'varchar', nullable: true })
+  collection: string;
 }
