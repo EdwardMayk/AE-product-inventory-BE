@@ -34,6 +34,16 @@ export class CartItemDTO {
   @IsString()
   dni: string;
 
+  //placa
+  @IsNotEmpty()
+  @IsString()
+  placa: string;
+
+  //marca
+  @IsNotEmpty()
+  @IsString()
+  marca: string;
+
   //date
   @IsNotEmpty()
   @IsString()

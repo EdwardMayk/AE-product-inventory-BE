@@ -33,6 +33,14 @@ export class CartItem {
   @Column({ type: 'varchar', nullable: true })
   dni: string;
 
+  //placa
+  @Column({ type: 'varchar', nullable: true })
+  placa: string;
+
+  //marca
+  @Column({ type: 'varchar', nullable: true })
+  marca: string;
+
   //date
   @Column({ type: 'varchar', nullable: true })
   date: string;

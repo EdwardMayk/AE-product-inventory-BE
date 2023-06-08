@@ -90,6 +90,12 @@ export class ProductsService {
         cartItem.quantity = item.quantity;
         cartItem.amount = item.amount;
         cartItem.collection = item.collection;
+        cartItem.address = item.address;
+        cartItem.dni = item.dni;
+        cartItem.date = item.date;
+        cartItem.name = item.name;
+        cartItem.marca = item.marca;
+        cartItem.placa = item.placa;
 
         // Guardar el objeto "CartItem" en la base de datos utilizando TypeORM
         await this.cartItemsRepository.save(cartItem);
@@ -105,5 +111,27 @@ export class ProductsService {
         `Insufficient stock for items: ${insufficientStockItems.join(', ')}`,
       );
     }
+  }
+
+  async getCartItems(): Promise<CartItem[]> {
+    return this.cartItemsRepository.find();
+  }
+
+  async deleteCartItem(uuid: string): Promise<any> {
+    const cartItem = await this.cartItemsRepository.findOne({
+      where: { uuid: uuid },
+    });
+    if (!cartItem) {
+      return 'CartItem not found';
+    }
+
+    const product = await this.productsRepository.findOne({
+      where: { uuid: cartItem.product.uuid },
+    });
+
+    product.stock += cartItem.quantity;
+    await this.productsRepository.save(product);
+
+    return this.cartItemsRepository.delete({ uuid: uuid });
   }
 }

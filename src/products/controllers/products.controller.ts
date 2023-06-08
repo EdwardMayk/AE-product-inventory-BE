@@ -62,4 +62,30 @@ export class ProductsController {
       );
     }
   }
+
+  @Get('cart')
+  async getCart(): Promise<any> {
+    try {
+      const cart = await this.productsService.getCartItems();
+      return cart;
+    } catch (error) {
+      throw new HttpException(
+        { message: 'Failed to get cart', error },
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+  }
+
+  @Delete('cart/:uuid')
+  async deleteCartItem(@Param('uuid') uuid: string): Promise<any> {
+    try {
+      await this.productsService.deleteCartItem(uuid);
+      return { message: 'Cart item deleted successfully' };
+    } catch (error) {
+      throw new HttpException(
+        { message: 'Failed to delete cart item', error },
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+  }
 }
